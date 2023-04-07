@@ -1,0 +1,22 @@
+[project]
+name = "PromptFileParser"
+version = "1.0.1"
+authors = [
+  { name="jake-cryptic", email="jake-cryptic@users.noreply.github.com" },
+]
+description = "Parses .prompt files"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jake-cryptic/prompt-parser/"
+"Bug Tracker" = "https://github.com/jake-cryptic/prompt-parser/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

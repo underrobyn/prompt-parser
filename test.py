@@ -1,4 +1,4 @@
-from PromptFile import PromptParser, PromptError
+from src.PromptFileParser import PromptParser, PromptError
 
 
 if __name__ == '__main__':
