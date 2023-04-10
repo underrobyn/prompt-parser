@@ -1,8 +1,8 @@
-VERSION = '1.0.0'
-
-
 import os
 import re
+
+
+VERSION = '1.0.0'
 
 
 class PromptError(Exception):
@@ -18,6 +18,7 @@ class PromptParser:
         self.sections = {}
         self.parent = None
         self.version = None
+        self.model = None
 
         self.load_file()
 
@@ -40,6 +41,10 @@ class PromptParser:
                 base_filepath = os.path.join(os.path.dirname(self.filepath), base_filepath)
                 self.parent = PromptParser(base_filepath)
 
+            elif line.startswith("MODEL:"):
+                model = line.split(" ")[1].strip()
+                self.model = model
+
             elif re.match(r'\[(\w+)\]', line):
                 section_name = re.findall(r'\[(\w+)\]', line)[0]
                 section_content = []
@@ -60,6 +65,16 @@ class PromptParser:
 
         if self.parent is None and 'PROMPT' not in self.sections:
             raise PromptError("Base prompt file must contain a 'PROMPT' section")
+
+        if self.parent is not None and self.parent.model is not None and self.model is not None:
+            if self.parent.model != self.model:
+                raise PromptError("Model in the current prompt file and base file must be the same")
+
+        if self.model is None and self.parent is not None:
+            self.model = self.parent.model
+
+        if self.model is None:
+            raise PromptError("You must define a model in at least the base file")
 
     def get_prompt(self):
         if self.parent is None:
